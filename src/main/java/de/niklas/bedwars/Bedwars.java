@@ -2,7 +2,10 @@ package de.niklas.bedwars;
 
 import de.niklas.bedwars.gamestate.GameState;
 import de.niklas.bedwars.gamestate.GameStateUtil;
+import de.niklas.bedwars.listener.PlayerConnectionListener;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ public class Bedwars extends JavaPlugin {
 
         ingamePlayers = new ArrayList<>();
 
+        registerListener(Bukkit.getPluginManager());
 
         getServer().getConsoleSender().sendMessage("§cDas Plugin §aBedwars §cvon §aBukkitNews §cwurde gestartet.");
         getServer().getConsoleSender().sendMessage("§eRef. https://github.com/niklasp2209/Bedwars");
@@ -31,6 +35,10 @@ public class Bedwars extends JavaPlugin {
     @Override
     public void onDisable(){
 
+    }
+
+    public void registerListener(PluginManager pluginManager){
+        pluginManager.registerEvents(new PlayerConnectionListener(this), this);
     }
 
     public String getPrefix() {
@@ -43,5 +51,9 @@ public class Bedwars extends JavaPlugin {
 
     public ArrayList<Player> getIngamePlayers() {
         return ingamePlayers;
+    }
+
+    public GameStateUtil getGameStateUtil() {
+        return gameStateUtil;
     }
 }

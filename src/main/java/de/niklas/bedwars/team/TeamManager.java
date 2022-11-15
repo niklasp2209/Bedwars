@@ -1,56 +1,50 @@
 package de.niklas.bedwars.team;
 
+import de.niklas.bedwars.Bedwars;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 public class TeamManager {
 
-    private HashMap<Player, Team> teamConnector;
+    private HashMap<Player, Teams> teamHashMap;
 
     public TeamManager(){
-        teamConnector = new HashMap<>();
+        teamHashMap = new HashMap<>();
     }
 
-    public Team getPlayerTeam(Player player){
-        return teamConnector.containsKey(player) ? teamConnector.get(player) : null;
+    public Teams getPlayerTeam(Player player){
+        return teamHashMap.containsKey(player) ? teamHashMap.get(player) : null;
     }
 
-    public void setPlayerTeam(Player player, Team team){
+    public void setPlayerTeam(Player player, Teams team) {
         if(getPlayerTeam(player) != null)
             getPlayerTeam(player).getTeamPlayers().remove(player);
         team.getTeamPlayers().add(player);
-        teamConnector.put(player, team);
+        teamHashMap.put(player, team);
     }
 
-    public void removePlayerTeam(Player player){
-        Team team = getPlayerTeam(player);
+    public void removePlayerTeam(Player player) {
+        Teams team = getPlayerTeam(player);
         team.getTeamPlayers().remove(player);
-        teamConnector.remove(player);
+        teamHashMap.remove(player);
     }
 
-    private Team getLeastPlayersTeam(){
-        Team currentLeastTeam = Team.values()[0];
-        for(Team current : Team.values()){
-            if(current.getTeamPlayers().size() < currentLeastTeam.getTeamPlayers().size())
-                currentLeastTeam = current;
+    private Teams getLeastPlayersTeam() {
+        Teams currentLeastPlayerTeam = Teams.values()[0];
+        for(Teams current : Teams.values()) {
+            if(current.getTeamPlayers().size() < currentLeastPlayerTeam.getTeamPlayers().size())
+                currentLeastPlayerTeam = current;
         }
-        return currentLeastTeam;
+        return currentLeastPlayerTeam;
     }
 
-    private Team getMostPlayersTeam(){
-        Team currentMostTeam = Team.values()[0];
-        for(Team current : Team.values()){
-            if(current.getTeamPlayers().size() > currentMostTeam.getTeamPlayers().size())
-                currentMostTeam = current;
+    private Teams getMostPlayersTeam() {
+        Teams currentMostPlayersTeam = Teams.values()[0];
+        for(Teams current : Teams.values()) {
+            if(current.getTeamPlayers().size() > currentMostPlayersTeam.getTeamPlayers().size())
+                currentMostPlayersTeam = current;
         }
-        return currentMostTeam;
-    }
-
-    public boolean balancedTeams(){
-        int difference = getMostPlayersTeam().getTeamPlayers().size() - getLeastPlayersTeam().getTeamPlayers().size();
-        if(difference >= 2)
-            return false;
-        return true;
+        return currentMostPlayersTeam;
     }
 }

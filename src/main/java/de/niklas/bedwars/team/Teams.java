@@ -6,37 +6,34 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public enum Team {
+public enum Teams {
     RED("Rot", ChatColor.RED, Material.RED_WOOL),
     BLUE("Blau", ChatColor.BLUE, Material.BLUE_WOOL),
     YELLOW("Gelb", ChatColor.YELLOW, Material.YELLOW_WOOL),
     GREEN("Grün", ChatColor.GREEN, Material.GREEN_WOOL);
 
     private String teamName;
-    private ChatColor chatColor;
+    private ChatColor chatcolor;
     private Material material;
     private ArrayList<Player> teamPlayers;
 
-    private Team(String teamName, ChatColor chatColor, Material material){
+    private Teams(String teamName, ChatColor chatcolor, Material material) {
         this.teamName = teamName;
-        this.chatColor = chatColor;
+        this.chatcolor = chatcolor;
         this.material = material;
         teamPlayers = new ArrayList<>();
     }
 
-    public ArrayList<Player> getTeamPlayers() {
-        return teamPlayers;
+    public String getTeamName() {
+        return chatcolor + teamName;
     }
-
-    public ChatColor getChatColor() {
-        return chatColor;
+    public ChatColor getChatcolor() {
+        return chatcolor;
     }
-
     public Material getMaterial() {
         return material;
     }
-
-    public String getTeamName() {
-        return teamName;
+    public ArrayList<Player> getTeamPlayers() {
+        return teamPlayers;
     }
 }

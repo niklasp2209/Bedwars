@@ -11,7 +11,7 @@ public class GameStateUtil {
     public GameStateUtil(Bedwars plugin){
         this.plugin = plugin;
         gameStates = new GameState[3];
-        gameStates[GameState.WAITING_STATE] = new WaitingState();
+        gameStates[GameState.WAITING_STATE] = new WaitingState(this);
         gameStates[GameState.INGAME_STATE] = new IngameState();
         gameStates[GameState.END_STATE] = new EndState();
     }
@@ -28,5 +28,13 @@ public class GameStateUtil {
             currentGameState.stop();
             currentGameState = null;
         }
+    }
+
+    public GameState getCurrentGameState() {
+        return currentGameState;
+    }
+
+    public Bedwars getPlugin() {
+        return plugin;
     }
 }
