@@ -1,0 +1,6 @@
+name: "Bedwars"
+author: BukkitNews
+version: "1.0"
+main: de.niklas.bedwars.Bedwars
+api-version: 1.16
+api: 1.16.5
