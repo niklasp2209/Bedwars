@@ -11,6 +11,6 @@ public class Bedwars extends JavaPlugin {
 
     @Override
     public void onDisable(){
-        
+
     }
 }
