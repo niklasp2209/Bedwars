@@ -21,7 +21,7 @@ public class Bedwars extends JavaPlugin {
         gameStateUtil = new GameStateUtil(this);
         gameStateUtil.setGameState(GameState.WAITING_STATE);
 
-        ingamePlayers = new ArrayList<Player>();
+        ingamePlayers = new ArrayList<>();
 
 
         getServer().getConsoleSender().sendMessage("§cDas Plugin §aBedwars §cvon §aBukkitNews §cwurde gestartet.");
