@@ -1,5 +1,8 @@
 package de.niklas.bedwars;
 
+import de.niklas.bedwars.commands.BedwarsCommand;
+import de.niklas.bedwars.game.maps.Map;
+import de.niklas.bedwars.game.team.GameTeamListener;
 import de.niklas.bedwars.game.team.GameTeamManager;
 import de.niklas.bedwars.gamestate.GameState;
 import de.niklas.bedwars.gamestate.GameStateUtil;
@@ -20,6 +23,7 @@ public class Bedwars extends JavaPlugin {
 
     private GameStateUtil gameStateUtil;
     private GameTeamManager gameTeamManager;
+    private Map map;
 
     @Override
     public void onEnable(){
@@ -30,6 +34,7 @@ public class Bedwars extends JavaPlugin {
         ingamePlayers = new ArrayList<>();
 
         registerListener(Bukkit.getPluginManager());
+        registerCommands();
 
         getServer().getConsoleSender().sendMessage("§cDas Plugin §aBedwars §cvon §aBukkitNews §cwurde gestartet.");
         getServer().getConsoleSender().sendMessage("§eRef. https://github.com/niklasp2209/Bedwars");
@@ -42,6 +47,11 @@ public class Bedwars extends JavaPlugin {
 
     public void registerListener(PluginManager pluginManager){
         pluginManager.registerEvents(new PlayerConnectionListener(this), this);
+        pluginManager.registerEvents(new GameTeamListener(this), this);
+    }
+
+    public void registerCommands(){
+        this.getCommand("bedwars").setExecutor(new BedwarsCommand(this));
     }
 
     public String getPrefix() {
@@ -62,5 +72,9 @@ public class Bedwars extends JavaPlugin {
 
     public GameTeamManager getGameTeamManager() {
         return gameTeamManager;
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

@@ -1,6 +1,7 @@
 package de.niklas.bedwars.utils;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,5 +31,15 @@ public class ItemBuilder {
         meta.setLore(list);
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static void setLobbyItems(Player player){
+        ItemStack team = createItem(Material.RED_BED, "§aTeam Auswahl", 1, "§7● Linksklick zum benutzen");
+        ItemStack leave = createItem(Material.MAGMA_CREAM, "§cZurück zur Lobby", 1, "§7● Linksklick zum benutzen");
+
+        player.getInventory().clear();
+        player.setHealth(20);
+        player.getInventory().setItem(0, team);
+        player.getInventory().setItem(8, leave);
     }
 }

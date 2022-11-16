@@ -12,7 +12,7 @@ public class GameStateUtil {
         this.plugin = plugin;
         gameStates = new GameState[3];
         gameStates[GameState.WAITING_STATE] = new WaitingState(this);
-        gameStates[GameState.INGAME_STATE] = new IngameState();
+        gameStates[GameState.INGAME_STATE] = new IngameState(this);
         gameStates[GameState.END_STATE] = new EndState();
     }
 

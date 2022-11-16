@@ -5,6 +5,7 @@ import de.niklas.bedwars.game.GamePlayer;
 import de.niklas.bedwars.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -73,11 +74,26 @@ public class GameTeamManager {
                 lore.add("§7● " + gameTeamType.getChatcolor() + player.getName());
             }
 
-            inventory.setItem(slot, ItemBuilder.createItemLore(gameTeamType.getMaterial(), gameTeamType.getTeamName(), 1, lore));
+            inventory.setItem(slot, ItemBuilder.createItemLore(gameTeamType.getMaterial(),
+                    gameTeamType.getTeamName(), 1, lore));
 
             i++;
         }
 
         return inventory;
+    }
+
+    public void onTeamSelection(Player player, GameTeam gameTeam){
+        setPlayerTeam(player, gameTeam);
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
+
+        GameTeamType gameTeamType = gameTeam.getGameTeamType();
+        player.sendMessage(plugin.getPrefix()+"§7Du bist Team "+
+                gameTeamType.getChatcolor()+gameTeamType.getTeamName()+" §7beigetreten");
+        player.closeInventory();
+    }
+
+    public int getTEAM_COUNT() {
+        return TEAM_COUNT;
     }
 }

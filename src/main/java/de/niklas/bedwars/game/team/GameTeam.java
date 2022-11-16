@@ -10,8 +10,8 @@ import java.util.UUID;
 public class GameTeam {
 
     private final GameTeamType gameTeamType;
-    private final Location spawnLocation;
-    private final Location bedLocation;
+    private Location spawnLocation;
+    private Location bedLocation;
     private List<Player> players;
     private boolean bedGone;
 
@@ -37,6 +37,14 @@ public class GameTeam {
 
     public Location getBedLocation() {
         return bedLocation;
+    }
+
+    public void setBedLocation(Location bedLocation) {
+        this.bedLocation = bedLocation;
+    }
+
+    public void setSpawnLocation(Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
     }
 
     public GameTeamType getGameTeamType() {
