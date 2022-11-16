@@ -4,7 +4,11 @@ import de.niklas.bedwars.Bedwars;
 import de.niklas.bedwars.countdowns.LobbyCountdown;
 import de.niklas.bedwars.gamestate.IngameState;
 import de.niklas.bedwars.gamestate.WaitingState;
+import de.niklas.bedwars.team.GameTeam;
+import de.niklas.bedwars.team.TeamManager;
+import de.niklas.bedwars.team.Teams;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,9 +19,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerConnectionListener implements Listener {
 
     private Bedwars plugin;
+    public static GameTeam gameTeam;
+
 
     public PlayerConnectionListener(Bedwars plugin){
         this.plugin = plugin;
+
+        Location loc1 = Bukkit.getWorld("world").getSpawnLocation();
+        Location loc2 = Bukkit.getWorld("world").getSpawnLocation();
+        gameTeam = GameTeam.create(Teams.BLUE, loc1, loc2);
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
@@ -35,7 +45,10 @@ public class PlayerConnectionListener implements Listener {
                     lobbyCountdown.start();
             }
 
-        }else if(plugin.getGameStateUtil().getCurrentGameState() instanceof IngameState){
+            new TeamManager().setPlayerTeam(player, gameTeam);
+            System.out.println(new TeamManager().getPlayerTeam(player).getTeamName());
+
+        }else if(plugin.getGameStateUtil().getCurrentGameState() instanceof IngameState) {
             event.setJoinMessage(null);
         }
     }

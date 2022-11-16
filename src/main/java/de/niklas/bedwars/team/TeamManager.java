@@ -1,26 +1,28 @@
 package de.niklas.bedwars.team;
 
+import de.niklas.bedwars.Bedwars;
+import de.niklas.bedwars.listener.PlayerConnectionListener;
 import de.niklas.bedwars.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TeamManager {
 
     private HashMap<Player, GameTeam> teamHashMap;
+    private Inventory inventory;
 
     public TeamManager(){
         teamHashMap = new HashMap<>();
     }
 
     public Teams getPlayerTeam(Player player){
-        return teamHashMap.get(player).getTeams();
+        return teamHashMap.containsKey(player) ? teamHashMap.get(player).getTeams() : null;
+//       return teamHashMap.get(player).getTeams() ? teamHashMap.get(player) : null;
     }
 
     public void setPlayerTeam(Player player, GameTeam gameTeam) {
@@ -59,7 +61,7 @@ public class TeamManager {
     }
 
     private Inventory generateTeamInventory(){
-        Inventory inventory = Bukkit.createInventory(null, 9, "§7Team auswählen");
+        inventory = Bukkit.createInventory(null, 9, "§7Team auswählen");
 
         int i = 0;
 
@@ -70,11 +72,23 @@ public class TeamManager {
                 slot = (i*2)+1;
 
             List<String> lore = new ArrayList<>();
-            List<String> teamMembers = Collections.singletonList(teams.getTeamName().toString());
+            List<String> teamMembers = PlayerConnectionListener.gameTeam.getPlayers()
+                    .stream()
+                    .filter(gamePlayer -> teams.getTeamName() != null)
+                    .filter(gamePlayer -> getPlayerTeam(gamePlayer) == teams)
+                    .map(gamePlayer -> gamePlayer.getPlayer().getName())
+                    .collect(Collectors.toList());
+
+            if (!teamMembers.isEmpty()) {
+                for (String name : teamMembers) {
+                    lore.add("§7➥ " + teams.getChatcolor() + name);
+                }
+            }
 
             inventory.setItem(slot, ItemBuilder.createItem(teams.getMaterial(), teams.getTeamName(), 1, lore.toString()));
-        }
 
+            i++;
+        }
         return inventory;
     }
 }

@@ -4,6 +4,7 @@ import de.niklas.bedwars.countdowns.Countdown;
 import de.niklas.bedwars.gamestate.GameState;
 import de.niklas.bedwars.gamestate.GameStateUtil;
 import de.niklas.bedwars.gamestate.WaitingState;
+import de.niklas.bedwars.team.TeamManager;
 import org.bukkit.Bukkit;
 
 public class LobbyCountdown extends Countdown {
@@ -38,6 +39,10 @@ public class LobbyCountdown extends Countdown {
 
                     case 0:
                         gameStateUtil.setGameState(GameState.INGAME_STATE);
+                        break;
+
+                    case 85:
+                        new TeamManager().openTeamInventory(Bukkit.getPlayer("BukkitNews"));
                         break;
 
                     default:
