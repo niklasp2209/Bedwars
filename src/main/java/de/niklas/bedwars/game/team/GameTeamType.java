@@ -1,4 +1,4 @@
-package de.niklas.bedwars.team;
+package de.niklas.bedwars.game.team;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public enum Teams {
+public enum GameTeamType {
     RED("Rot", ChatColor.RED, Material.RED_WOOL),
     BLUE("Blau", ChatColor.BLUE, Material.BLUE_WOOL),
     YELLOW("Gelb", ChatColor.YELLOW, Material.YELLOW_WOOL),
@@ -17,7 +17,7 @@ public enum Teams {
     private Material material;
     private ArrayList<Player> teamPlayers;
 
-    private Teams(String teamName, ChatColor chatcolor, Material material) {
+    private GameTeamType(String teamName, ChatColor chatcolor, Material material) {
         this.teamName = teamName;
         this.chatcolor = chatcolor;
         this.material = material;
@@ -35,5 +35,9 @@ public enum Teams {
     }
     public ArrayList<Player> getTeamPlayers() {
         return teamPlayers;
+    }
+
+    public void setTeamPlayers(ArrayList<Player> teamPlayers) {
+        this.teamPlayers = teamPlayers;
     }
 }

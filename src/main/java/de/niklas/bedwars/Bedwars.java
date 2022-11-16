@@ -1,5 +1,6 @@
 package de.niklas.bedwars;
 
+import de.niklas.bedwars.game.team.GameTeamManager;
 import de.niklas.bedwars.gamestate.GameState;
 import de.niklas.bedwars.gamestate.GameStateUtil;
 import de.niklas.bedwars.listener.PlayerConnectionListener;
@@ -18,10 +19,12 @@ public class Bedwars extends JavaPlugin {
     private ArrayList<Player> ingamePlayers;
 
     private GameStateUtil gameStateUtil;
+    private GameTeamManager gameTeamManager;
 
     @Override
     public void onEnable(){
         gameStateUtil = new GameStateUtil(this);
+        gameTeamManager = new GameTeamManager(this);
         gameStateUtil.setGameState(GameState.WAITING_STATE);
 
         ingamePlayers = new ArrayList<>();
@@ -55,5 +58,9 @@ public class Bedwars extends JavaPlugin {
 
     public GameStateUtil getGameStateUtil() {
         return gameStateUtil;
+    }
+
+    public GameTeamManager getGameTeamManager() {
+        return gameTeamManager;
     }
 }

@@ -2,11 +2,11 @@ package de.niklas.bedwars.listener;
 
 import de.niklas.bedwars.Bedwars;
 import de.niklas.bedwars.countdowns.LobbyCountdown;
+import de.niklas.bedwars.game.team.GameTeam;
+import de.niklas.bedwars.game.team.GameTeamManager;
+import de.niklas.bedwars.game.team.GameTeamType;
 import de.niklas.bedwars.gamestate.IngameState;
 import de.niklas.bedwars.gamestate.WaitingState;
-import de.niklas.bedwars.team.GameTeam;
-import de.niklas.bedwars.team.TeamManager;
-import de.niklas.bedwars.team.Teams;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,15 +19,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerConnectionListener implements Listener {
 
     private Bedwars plugin;
-    public static GameTeam gameTeam;
-
+    private GameTeam gameTeam;
 
     public PlayerConnectionListener(Bedwars plugin){
         this.plugin = plugin;
 
         Location loc1 = Bukkit.getWorld("world").getSpawnLocation();
         Location loc2 = Bukkit.getWorld("world").getSpawnLocation();
-        gameTeam = GameTeam.create(Teams.BLUE, loc1, loc2);
+        gameTeam = GameTeam.create(GameTeamType.BLUE, loc1, loc2);
+
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
@@ -45,8 +45,8 @@ public class PlayerConnectionListener implements Listener {
                     lobbyCountdown.start();
             }
 
-            new TeamManager().setPlayerTeam(player, gameTeam);
-            System.out.println(new TeamManager().getPlayerTeam(player).getTeamName());
+            plugin.getGameTeamManager().setPlayerTeam(player, gameTeam);
+            plugin.getGameTeamManager().openInventory(player);
 
         }else if(plugin.getGameStateUtil().getCurrentGameState() instanceof IngameState) {
             event.setJoinMessage(null);
