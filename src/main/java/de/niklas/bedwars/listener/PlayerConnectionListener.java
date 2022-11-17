@@ -43,7 +43,6 @@ public class PlayerConnectionListener implements Listener {
             }
 
             ItemBuilder.setLobbyItems(player);
-            plugin.getGameTeamManager().setPlayerTeam(player, plugin.getMap().getTeamRed());
 
         }else if(plugin.getGameStateUtil().getCurrentGameState() instanceof IngameState) {
             event.setJoinMessage(null);

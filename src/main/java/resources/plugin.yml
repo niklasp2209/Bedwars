@@ -7,3 +7,5 @@ api: 1.16.5
 commands:
   bedwars:
     usage: Setup-Command
+  start:
+    usage: Start-Command

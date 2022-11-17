@@ -1,6 +1,7 @@
 package de.niklas.bedwars.gamestate;
 
 import de.niklas.bedwars.Bedwars;
+import de.niklas.bedwars.countdowns.ItemCountdown;
 import de.niklas.bedwars.game.maps.Map;
 import de.niklas.bedwars.game.team.GameTeam;
 import de.niklas.bedwars.game.team.GameTeamManager;
@@ -12,15 +13,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class IngameState extends GameState {
     private Map map;
     private Bedwars plugin;
+    private ItemCountdown itemCountdown;
 
     public IngameState(GameStateUtil gameStateUtil){
         this.plugin = JavaPlugin.getPlugin(Bedwars.class);
+        itemCountdown = new ItemCountdown(gameStateUtil);
     }
 
     @Override
     public void start() {
-        map = new Map(plugin, "Haus");
-        map.load();
+        map = plugin.getMap();
         for(Player player : plugin.getIngamePlayers()){
             if(plugin.getGameTeamManager().getPlayerTeam(player).getGameTeamType().equals(GameTeamType.RED))
                 player.teleport(map.getTeamRed().getSpawnLocation());
@@ -33,8 +35,9 @@ public class IngameState extends GameState {
 
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1L, 1L);
         }
+        itemCountdown.start();
 
-        
+
     }
 
     @Override

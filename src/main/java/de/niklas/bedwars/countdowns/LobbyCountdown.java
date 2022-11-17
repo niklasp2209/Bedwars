@@ -4,6 +4,7 @@ import de.niklas.bedwars.gamestate.GameState;
 import de.niklas.bedwars.gamestate.GameStateUtil;
 import de.niklas.bedwars.gamestate.WaitingState;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class LobbyCountdown extends Countdown {
 
@@ -76,5 +77,13 @@ public class LobbyCountdown extends Countdown {
 
     public boolean isRunning() {
         return isRunning;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
     }
 }

@@ -1,6 +1,7 @@
 package de.niklas.bedwars;
 
 import de.niklas.bedwars.commands.BedwarsCommand;
+import de.niklas.bedwars.commands.StartCommand;
 import de.niklas.bedwars.game.maps.Map;
 import de.niklas.bedwars.game.team.GameTeamListener;
 import de.niklas.bedwars.game.team.GameTeamManager;
@@ -38,6 +39,9 @@ public class Bedwars extends JavaPlugin {
 
         getServer().getConsoleSender().sendMessage("§cDas Plugin §aBedwars §cvon §aBukkitNews §cwurde gestartet.");
         getServer().getConsoleSender().sendMessage("§eRef. https://github.com/niklasp2209/Bedwars");
+
+        map = new Map(this, "Haus");
+        map.load();
     }
 
     @Override
@@ -52,6 +56,7 @@ public class Bedwars extends JavaPlugin {
 
     public void registerCommands(){
         this.getCommand("bedwars").setExecutor(new BedwarsCommand(this));
+        this.getCommand("start").setExecutor(new StartCommand(this));
     }
 
     public String getPrefix() {

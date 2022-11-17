@@ -54,6 +54,20 @@ public class Map {
         new ConfigurationUtil(plugin, location, "Maps."+name+"."+spawnNumber).saveLocation();
     }
 
+    public void setBronzeLocation(int bronzeNumber, Location location){
+        bronzeLocation[bronzeNumber-1] = location;
+        new ConfigurationUtil(plugin, location, "Maps."+name+".Bronze"+"."+bronzeNumber).saveLocation();
+    }
+
+    public void setIronLocation(int ironNumber, Location location){
+        ironLocation[ironNumber-1] = location;
+        new ConfigurationUtil(plugin, location, "Maps."+name+".Iron"+"."+ironNumber).saveLocation();
+    }
+
+    public void setGoldLocation(int goldNumber, Location location){
+        goldLocation[goldNumber-1] = location;
+        new ConfigurationUtil(plugin, location, "Maps."+name+".Gold"+"."+goldNumber).saveLocation();
+    }
     public void setBedLocations(int bedNumber, Location location){
         bedLocations[bedNumber-1] = location;
         new ConfigurationUtil(plugin, location, "Maps."+name+".Bed"+"."+bedNumber).saveLocation();
@@ -63,6 +77,10 @@ public class Map {
         this.builder = builder;
         plugin.getConfig().set("Maps."+name+".Builder", builder);
         plugin.saveConfig();
+    }
+
+    public boolean playable(){
+        return false;
     }
 
     public boolean exists(){
@@ -92,7 +110,19 @@ public class Map {
         Location bedLocationGreen = new ConfigurationUtil(plugin, "Maps."+name+".Bed"+".1").loadLocation();
         teamGreen.setSpawnLocation(spawnLocationGreen);
         teamGreen.setBedLocation(bedLocationGreen);
-    }//        gameTeam = GameTeam.create(GameTeamType.BLUE, loc1, loc2);
+
+        for (int i = 0; i < 4; i++) {
+            Location bronzeLocation = new ConfigurationUtil(plugin, "Maps."+name+".Bronze"+"."+(i+1)).loadLocation();
+            setBronzeLocation(i+1, bronzeLocation);
+
+            Location ironLocation = new ConfigurationUtil(plugin, "Maps."+name+".Iron"+"."+(i+1)).loadLocation();
+            setIronLocation(i+1, ironLocation);
+
+            Location goldLocation = new ConfigurationUtil(plugin, "Maps."+name+".Gold"+"."+(i+1)).loadLocation();
+            setGoldLocation(i+1, goldLocation);
+        }
+
+    }
 
 
     public Location getSpectatorLocation() {
@@ -129,5 +159,17 @@ public class Map {
 
     public Location[] getBedLocations() {
         return bedLocations;
+    }
+
+    public Location[] getBronzeLocation() {
+        return bronzeLocation;
+    }
+
+    public Location[] getGoldLocation() {
+        return goldLocation;
+    }
+
+    public Location[] getIronLocation() {
+        return ironLocation;
     }
 }

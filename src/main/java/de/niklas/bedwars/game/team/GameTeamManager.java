@@ -47,6 +47,9 @@ public class GameTeamManager {
         GameTeam gameTeam = getPlayerTeam(player);
         gameTeam.getPlayers().remove(player);
         teamHashMap.remove(player);
+        GameTeamType gameTeamType = gameTeam.getGameTeamType();
+        if(gameTeamType.getTeamPlayers().contains(player))
+            gameTeamType.getTeamPlayers().remove(player);
     }
 
 //    public void printTeam(Player player){
@@ -55,6 +58,7 @@ public class GameTeamManager {
 
     public void openInventory(Player player){
         player.openInventory(generateTeamInventory());
+        player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1L, 1L);
     }
 
     private Inventory generateTeamInventory(){
@@ -84,6 +88,10 @@ public class GameTeamManager {
     }
 
     public void onTeamSelection(Player player, GameTeam gameTeam){
+        if(getPlayerTeam(player) != null){
+            removePlayerTeam(player);
+        }
+
         setPlayerTeam(player, gameTeam);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
 

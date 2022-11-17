@@ -35,21 +35,30 @@ public class BedwarsCommand implements CommandExecutor {
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
                     }else
                         player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert bereits!");
-                }else if(args.length == 3 && args[0].equalsIgnoreCase("set")){
+                }else if(args.length == 4 && args[0].equalsIgnoreCase("set")){
                     Map map = new Map(plugin, args[1]);
                     if(map.exists()){
                         if(args[2].equalsIgnoreCase("bronze")){
+                            map.setBronzeLocation(Integer.parseInt(args[3]), player.getLocation());
+                            player.sendMessage(plugin.getPrefix()+"§eBronzespawn "+args[3]+" §7wurde gesetzt.");
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
 
                         }else if(args[2].equalsIgnoreCase("iron")){
+                            map.setIronLocation(Integer.parseInt(args[3]), player.getLocation());
+                            player.sendMessage(plugin.getPrefix()+"§7Eisenspawn "+args[3]+" §7wurde gesetzt.");
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
 
                         }else if(args[2].equalsIgnoreCase("gold")){
+                            map.setGoldLocation(Integer.parseInt(args[3]), player.getLocation());
+                            player.sendMessage(plugin.getPrefix()+"§6Goldspawn "+args[3]+" §7wurde gesetzt.");
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
 
                         }
                     }else
                         player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
                 }else if(args.length == 4 && args[0].equalsIgnoreCase("set")){
                     //bedwars set <MAP> <TEAM> spawn/bed
-                    //bedwars set <MAP> bronze/iron/gold
+                    //bedwars set <MAP> bronze/iron/gold 1-4
                     if(args[3].equalsIgnoreCase("spawn")){
                         Map map = new Map(plugin, args[1]);
                         if(map.exists()){
