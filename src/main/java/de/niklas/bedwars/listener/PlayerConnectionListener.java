@@ -25,10 +25,6 @@ public class PlayerConnectionListener implements Listener {
     public PlayerConnectionListener(Bedwars plugin){
         this.plugin = plugin;
 
-//        Location loc1 = Bukkit.getWorld("world").getSpawnLocation();
-//        Location loc2 = Bukkit.getWorld("world").getSpawnLocation();
-//        gameTeam = GameTeam.create(GameTeamType.BLUE, loc1, loc2);
-
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
@@ -47,6 +43,7 @@ public class PlayerConnectionListener implements Listener {
             }
 
             ItemBuilder.setLobbyItems(player);
+            plugin.getGameTeamManager().setPlayerTeam(player, plugin.getMap().getTeamRed());
 
         }else if(plugin.getGameStateUtil().getCurrentGameState() instanceof IngameState) {
             event.setJoinMessage(null);

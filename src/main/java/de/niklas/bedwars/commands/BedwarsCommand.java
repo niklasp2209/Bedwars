@@ -35,8 +35,21 @@ public class BedwarsCommand implements CommandExecutor {
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
                     }else
                         player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert bereits!");
+                }else if(args.length == 3 && args[0].equalsIgnoreCase("set")){
+                    Map map = new Map(plugin, args[1]);
+                    if(map.exists()){
+                        if(args[2].equalsIgnoreCase("bronze")){
+
+                        }else if(args[2].equalsIgnoreCase("iron")){
+
+                        }else if(args[2].equalsIgnoreCase("gold")){
+
+                        }
+                    }else
+                        player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
                 }else if(args.length == 4 && args[0].equalsIgnoreCase("set")){
                     //bedwars set <MAP> <TEAM> spawn/bed
+                    //bedwars set <MAP> bronze/iron/gold
                     if(args[3].equalsIgnoreCase("spawn")){
                         Map map = new Map(plugin, args[1]);
                         if(map.exists()){
@@ -60,10 +73,34 @@ public class BedwarsCommand implements CommandExecutor {
                                 player.sendMessage(plugin.getPrefix()+"§7Spawn für §aGrün §7wurde gesetzt.");
                                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
                             }
-                        }
+                        }else
+                            player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
 
                     }else if(args[3].equalsIgnoreCase("bed")){
+                        Map map = new Map(plugin, args[1]);
+                        if(map.exists()){
+                            if(args[2].equalsIgnoreCase("Rot")){
+                                map.setBedLocations(1, player.getTargetBlock(null, 200).getLocation());
+                                player.sendMessage(plugin.getPrefix()+"§7Spawn für §cRot §7wurde gesetzt");
+                                player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
 
+                            }else if(args[2].equalsIgnoreCase("Blau")){
+                                map.setBedLocations(2, player.getTargetBlock(null, 200).getLocation());
+                                player.sendMessage(plugin.getPrefix()+"§7Spawn für §cRot §7wurde gesetzt");
+                                player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
+
+                            }else if(args[2].equalsIgnoreCase("Gelb")){
+                                map.setBedLocations(3, player.getTargetBlock(null, 200).getLocation());
+                                player.sendMessage(plugin.getPrefix()+"§7Spawn für §cRot §7wurde gesetzt");
+                                player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
+
+                            }else if(args[2].equalsIgnoreCase("Grün")){
+                                map.setBedLocations(4, player.getTargetBlock(null, 200).getLocation());
+                                player.sendMessage(plugin.getPrefix()+"§7Spawn für §cRot §7wurde gesetzt");
+                                player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
+                            }
+                        }else
+                            player.sendMessage(plugin.getPrefix()+"§cDiese Map existiert nicht!");
                     }else
                         sendInstructions(player);
                 }else

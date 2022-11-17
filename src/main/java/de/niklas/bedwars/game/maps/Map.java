@@ -6,6 +6,7 @@ import de.niklas.bedwars.game.team.GameTeamManager;
 import de.niklas.bedwars.game.team.GameTeamType;
 import de.niklas.bedwars.utils.ConfigurationUtil;
 import de.niklas.bedwars.utils.LocationUtil;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.bukkit.Location;
 
 public class Map {
@@ -21,6 +22,9 @@ public class Map {
     private String builder;
     private Location[] spawnLocations;
     private Location[] bedLocations;
+    private Location[] bronzeLocation;
+    private Location[] ironLocation;
+    private Location[] goldLocation;
     private Location spectatorLocation;
 
     private GameTeam teamRed;
@@ -32,6 +36,10 @@ public class Map {
         this.plugin = plugin;
         this.name = name.toUpperCase();
         this.spawnLocations = new Location[plugin.getGameTeamManager().getTEAM_COUNT()];
+        this.bedLocations = new Location[plugin.getGameTeamManager().getTEAM_COUNT()];
+        this.bronzeLocation = new Location[4];
+        this.ironLocation = new Location[4];
+        this.goldLocation = new Location[4];
 
         if(spawnLocations.length == 4) {
             teamRed = GameTeam.create(GameTeamType.RED, null, null);
@@ -46,6 +54,11 @@ public class Map {
         new ConfigurationUtil(plugin, location, "Maps."+name+"."+spawnNumber).saveLocation();
     }
 
+    public void setBedLocations(int bedNumber, Location location){
+        bedLocations[bedNumber-1] = location;
+        new ConfigurationUtil(plugin, location, "Maps."+name+".Bed"+"."+bedNumber).saveLocation();
+    }
+
     public void create(String builder){
         this.builder = builder;
         plugin.getConfig().set("Maps."+name+".Builder", builder);
@@ -57,7 +70,28 @@ public class Map {
     }
 
     public void load(){
+        Location spawnLocationRed = new ConfigurationUtil(plugin, "Maps."+name+".1").loadLocation();
+        Location bedLocationRed = new ConfigurationUtil(plugin, "Maps."+name+".Bed"+".1").loadLocation();
+        teamRed.setSpawnLocation(spawnLocationRed);
+        teamRed.setBedLocation(bedLocationRed);
 
+
+        Location spawnLocationBlue = new ConfigurationUtil(plugin, "Maps."+name+".2").loadLocation();
+        Location bedLocationBlue = new ConfigurationUtil(plugin, "Maps."+name+".Bed"+".1").loadLocation();
+        teamBlue.setSpawnLocation(spawnLocationBlue);
+        teamBlue.setBedLocation(bedLocationBlue);
+
+
+        Location spawnLocationYellow = new ConfigurationUtil(plugin, "Maps."+name+".3").loadLocation();
+        Location bedLocationYellow = new ConfigurationUtil(plugin, "Maps."+name+".Bed"+".1").loadLocation();
+        teamYellow.setSpawnLocation(spawnLocationYellow);
+        teamYellow.setBedLocation(bedLocationYellow);
+
+
+        Location spawnLocationGreen = new ConfigurationUtil(plugin, "Maps."+name+".4").loadLocation();
+        Location bedLocationGreen = new ConfigurationUtil(plugin, "Maps."+name+".Bed"+".1").loadLocation();
+        teamGreen.setSpawnLocation(spawnLocationGreen);
+        teamGreen.setBedLocation(bedLocationGreen);
     }//        gameTeam = GameTeam.create(GameTeamType.BLUE, loc1, loc2);
 
 
@@ -75,5 +109,25 @@ public class Map {
 
     public String getName() {
         return name;
+    }
+
+    public GameTeam getTeamGreen() {
+        return teamGreen;
+    }
+
+    public GameTeam getTeamRed() {
+        return teamRed;
+    }
+
+    public GameTeam getTeamBlue() {
+        return teamBlue;
+    }
+
+    public GameTeam getTeamYellow() {
+        return teamYellow;
+    }
+
+    public Location[] getBedLocations() {
+        return bedLocations;
     }
 }
