@@ -21,5 +21,6 @@ de\niklas\bedwars\countdowns\LobbyCountdown$1.class
 de\niklas\bedwars\utils\ItemBuilder.class
 de\niklas\bedwars\countdowns\ItemCountdown.class
 de\niklas\bedwars\countdowns\Countdown.class
+de\niklas\bedwars\game\items\GameSpawner.class
 de\niklas\bedwars\gamestate\GameState.class
 de\niklas\bedwars\game\team\GameTeamType.class

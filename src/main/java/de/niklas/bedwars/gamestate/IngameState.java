@@ -35,7 +35,7 @@ public class IngameState extends GameState {
 
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1L, 1L);
         }
-        itemCountdown.start();
+        itemCountdown.startSpawningItems();
 
 
     }

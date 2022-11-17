@@ -1,13 +1,13 @@
 package de.niklas.bedwars.game.maps;
 
 import de.niklas.bedwars.Bedwars;
+import de.niklas.bedwars.game.items.GameSpawner;
 import de.niklas.bedwars.game.team.GameTeam;
-import de.niklas.bedwars.game.team.GameTeamManager;
 import de.niklas.bedwars.game.team.GameTeamType;
 import de.niklas.bedwars.utils.ConfigurationUtil;
-import de.niklas.bedwars.utils.LocationUtil;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.bukkit.Location;
+
+import java.util.HashMap;
 
 public class Map {
     /*
@@ -27,6 +27,8 @@ public class Map {
     private Location[] goldLocation;
     private Location spectatorLocation;
 
+    private HashMap<GameSpawner, Location[]> itemSpawners;
+
     private GameTeam teamRed;
     private GameTeam teamGreen;
     private GameTeam teamBlue;
@@ -40,6 +42,7 @@ public class Map {
         this.bronzeLocation = new Location[4];
         this.ironLocation = new Location[4];
         this.goldLocation = new Location[4];
+        itemSpawners = new HashMap<>();
 
         if(spawnLocations.length == 4) {
             teamRed = GameTeam.create(GameTeamType.RED, null, null);
@@ -120,13 +123,21 @@ public class Map {
 
             Location goldLocation = new ConfigurationUtil(plugin, "Maps."+name+".Gold"+"."+(i+1)).loadLocation();
             setGoldLocation(i+1, goldLocation);
-        }
 
+            itemSpawners.put(GameSpawner.BRONZE, getBronzeLocation());
+            itemSpawners.put(GameSpawner.IRON, getIronLocation());
+            itemSpawners.put(GameSpawner.GOLD, getGoldLocation());
+
+        }
     }
 
 
     public Location getSpectatorLocation() {
         return spectatorLocation;
+    }
+
+    public HashMap<GameSpawner, Location[]> getItemSpawners() {
+        return itemSpawners;
     }
 
     public Location[] getSpawnLocations() {
